@@ -1,0 +1,25 @@
+{
+  "name": "tester-service-worker",
+  "version": "1.0.0",
+  "description": "a express server use to test a reel live condition of other projet (virtual-front-end)",
+  "license": "ISC",
+  "author": "jadbathore",
+  "type": "module",
+  "main": "src/server.ts",
+  
+  "scripts": {
+    "start": "npx tsx src/server.ts",
+    "test": "npx tsx src/test.ts "
+  },
+  "dependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/express": "^5.0.6",
+    "dotenv": "^17.4.2",
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "tsx": "^4.21.0"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  }
+}

@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+        "allowImportingTsExtensions": true,
+        "declarationDir": "./src/",
+        "experimentalDecorators": true,
+        "declaration": true,
+        "emitDeclarationOnly": false,
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "moduleDetection": "force",
+        "allowSyntheticDefaultImports":true,
+        "skipLibCheck": false,
+    },
+    "include":["./src/public/*.ts"]
+}
