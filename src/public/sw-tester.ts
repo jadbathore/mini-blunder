@@ -1,6 +1,16 @@
-import { foo } from "./test.ts";
+import { fetchingWebSocket,response } from "./test.ts";
 
-console.log(foo(3));
-let a:number = 3;
-
-let b:Port = 2000 as Port;
+(async ()=>{
+        fetchingWebSocket().then((a)=>{console.log(a)}).catch((err)=>{
+                console.log(err)
+        });
+        // cachePutResponse().then(()=>{
+        //         console.log("ok")
+        // }).catch((err)=>{
+        //         console.log("error")
+        // });
+        // searchFile
+        // let cache_smale = await response("https://localhost:3000/test/fs/test/scene1/1.Setting/1.RendererSetting.cjs");
+        // let cache_big = await response("https://localhost:3000/test/fs/asset/img/marsbump1k.jpg");
+        // console.log(cache_smale,cache_big)
+})()

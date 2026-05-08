@@ -16,7 +16,7 @@ enum Protocols {
         exec = "exec"
 }
 
-function definetype(type:string):string
+export function definetype(type:string):string
 {
         let a:string = "";
         switch (type){
@@ -37,7 +37,7 @@ function definetype(type:string):string
         return a;
 }
 
-function formatResponseFromBlob(blob:Blob,type_file:string):Response
+export function formatResponseFromBlob(blob:Blob,type_file:string):Response
 {
         let data = blob.slice(0,blob.size,definetype(type_file))
         return new Response(data,{
@@ -48,7 +48,7 @@ function formatResponseFromBlob(blob:Blob,type_file:string):Response
 }
 
 
-async function fetchingWebSocket():Promise<Map<string,Response>>
+export async function fetchingWebSocket():Promise<Map<string,Response>>
 {
         let snapshot_payload:SnapShot = {};
         let inMemoryData:Map<string,Response> = new Map();
@@ -119,7 +119,7 @@ async function fetchingWebSocket():Promise<Map<string,Response>>
         return pending_datafile
 }
 
-async function cachePutResponse():Promise<void>
+export async function cachePutResponse():Promise<void>
 {
         const cache:Cache = await caches.open(CACHE_NAME);
         let datas:Map<string,Response> = await fetchingWebSocket();
@@ -128,14 +128,14 @@ async function cachePutResponse():Promise<void>
         });
 }
 
-async function putInCache(request:RequestInfo,response:Response):Promise<void>
+export async function putInCache(request:RequestInfo,response:Response):Promise<void>
 {
         const cache = await caches.open(CACHE_NAME);
         await cache.put(request, response);
 }
 
 
-async function searchFile(url:string)
+export async function searchFile(url:string)
 {
         const ws:WebSocket = new WebSocket(Addr,[Protocols.read]);
         let snapshot_payload:SnapShot = {}
@@ -176,7 +176,7 @@ async function searchFile(url:string)
         return pending_datafile;
 }
 
-async function response(url:string):Promise<Response>
+export async function response(url:string):Promise<Response>
 {
         const cache = await caches.open(CACHE_NAME);
         let data = await cache.match(url);
@@ -199,44 +199,3 @@ async function response(url:string):Promise<Response>
                 });
         });  
 }
-
-(async ()=>{
-
-        fetchingWebSocket().then((a)=>{console.log(a)}).catch((err)=>{
-                console.log(err)
-        });
-        // cachePutResponse().then(()=>{
-        //         console.log("ok")
-        // }).catch((err)=>{
-        //         console.log("error")
-        // });
-        // searchFile
-        // let b = await response("https://localhost:3000/test/fs/test/scene1/1.Setting/1.RendererSetting.cjs");
-        // let b = await response("https://localhost:3000/test/fs/asset/img/marsbump1k.jpg");
-        // console.log(b)
-})()
-
-
-// sw.addEventListener('install',(_: ExtendableEvent)=>{
-//         sw.skipWaiting();
-// })
-
-// sw.addEventListener('activate',(event:ExtendableEvent)=>{
-//         console.log("actif")
-//         event.waitUntil(
-//                 (async () => {
-//                         await cachePutResponse();
-//                         await sw.clients.claim();
-//                 })()
-//         );
-// })
-
-
-// sw.addEventListener('fetch',(event: FetchEvent)=>{
-//         console.log(event.request)
-//         event.respondWith((async ()=>{
-//                 return await response(event.request as unknown as string)
-//         })())
-// })
-
-

@@ -3,7 +3,7 @@
         "module": "ESNext",
         "moduleResolution": "Bundler",
         "allowImportingTsExtensions": true,
-        "declarationDir": "./src/",
+        // "declarationDir": "./src",
         "experimentalDecorators": true,
         "declaration": true,
         "emitDeclarationOnly": false,

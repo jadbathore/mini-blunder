@@ -61,12 +61,13 @@ export class Transpiler
     
     public async handler(req:request,res:response) {
       let file:SourceResolution = Transpiler._instance.get_source_map(req.path);
+      // console.log(Transpiler._instance._transpilerMap)
       res.type("application/javascript").send(file.resolution)
     }
 
     private get_source_map(key:string)
     {
-      return this._transpilerMap.get(transformToModulable(key)) as SourceResolution;
+      return Transpiler._instance._transpilerMap.get(transformToModulable(key)) as SourceResolution;
     }
 }
 
