@@ -11,9 +11,9 @@ const Addr:string|URL = 'ws://localhost:8080';
 // }
 
 enum Protocols {
-        read = "read",
-        write = "write",
-        exec = "exec"
+        read = "Read",
+        write = "Write",
+        exec = "Exec"
 }
 
 export function definetype(type:string):string
