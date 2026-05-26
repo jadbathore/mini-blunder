@@ -40,7 +40,6 @@ export class Transpiler
       host.writeFile = (name:string, content:string) => {
         if (name.includes('js')) {
           let basename:string = transformToModulable(name);
-          console.log(basename)
           outputs.set(basename,{
             resolution: content,
             source: program.getSourceFile(name.replace(/(?<=(\/([A-z]|[0-9]|\-|\_)+)+)(\.js)(?!.)/g,".ts")) as SourceFile
@@ -61,7 +60,6 @@ export class Transpiler
     
     public async handler(req:request,res:response) {
       let file:SourceResolution = Transpiler._instance.get_source_map(req.path);
-      // console.log(Transpiler._instance._transpilerMap)
       res.type("application/javascript").send(file.resolution)
     }
 

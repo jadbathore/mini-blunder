@@ -48,13 +48,19 @@ export function formatResponseFromBlob(blob:Blob,type_file:string):Response
 }
 
 
+
+
+
+
+
+
 export async function fetchingWebSocket():Promise<Map<string,Response>>
 {
         let snapshot_payload:SnapShot = {};
         let inMemoryData:Map<string,Response> = new Map();
         let _map_:Map<string,Response> = new Map();
         let proxy = new Proxy(inMemoryData,{
-                get:function(target:Map<string,Response>,p:string|symbol, receiver:any)
+                get:function(target:Map<string,Response>,p:string|symbol,_:any)
                 {
                         if(p){
                                 return _map_.get(p.toString())
@@ -92,27 +98,39 @@ export async function fetchingWebSocket():Promise<Map<string,Response>>
         };
 
         ws.onmessage = (message) => {
-                switch (true) {
-                        case (message.data == "end"):
-                                resolvePending(_map_)
-                                ws.close()
-                        break;
-                        case (!payloadBlobToggle):
-
-                                inMemoryData.set(snapshot_payload.url as string,message.data)
-                                payloadBlobToggle = !payloadBlobToggle
-                        break;
-                        case (payloadBlobToggle):
-                                console.log(message.data)
-
-                                snapshot_payload = JSON.parse(message.data)
-                                payloadBlobToggle = !payloadBlobToggle
-                        break;
-                        
+                // try {
+                //         snapshot_payload = JSON.parse(message.data);
+                // } catch {
+                //         inMemoryData.set(snapshot_payload.url as string,message.data)
+                // } finally {
+                //         payloadBlobToggle = !payloadBlobToggle
+                // }
+                try {
+                        snapshot_payload = JSON.parse(message.data);
+                        console.log("message = " ,message.data);
+                } catch {
+                        console.log("message = " ,message.data);
+                        console.log("snap = " ,snapshot_payload)
                 }
+                // switch (true) {
+                //         case (message.data == "end"):
+                //                 resolvePending(_map_)
+                //                 ws.close()
+                //         break;
+                //         case (!payloadBlobToggle):
+                //                 inMemoryData.set(snapshot_payload.url as string,message.data);
+
+                //                 payloadBlobToggle = !payloadBlobToggle
+                //         break;
+                //         case (payloadBlobToggle):
+                //                 snapshot_payload = JSON.parse(message.data)
+                //                 payloadBlobToggle = !payloadBlobToggle
+                //         break;
+                        
+                // }
         };
 
-        ws.onerror = (err) => {
+        ws.onerror = (_) => {
                 rejectPending()
         }
         
@@ -148,7 +166,6 @@ export async function searchFile(url:string)
         let payloadBlobToggle = true;
 
         ws.onopen = () => {
-                console.log("open")
                 ws.send(url)
         }
 

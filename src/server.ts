@@ -9,7 +9,7 @@ import {type response,type request,type SourceResolution, Transpiler} from "./ty
 let instanceTranspiler = Transpiler.getInstance();
 
 dotenv.config({quiet:true});
-
+type Port = number & {__brand:'Port'};
 const app:Express = express();
 let address:Port = ( Number(process.env.ADDR)|| 6343 ) as Port;
 let staticPath:string = path.join("src","public");
