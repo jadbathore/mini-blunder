@@ -47,12 +47,21 @@ export function formatResponseFromBlob(blob:Blob,type_file:string):Response
         })
 }
 
+export function testExec(code:string){
+        const ws = new WebSocket(Addr,[Protocols.write]);
+        ws.send(code);
+        ws.onopen = () => {
+                console.log("web socket active\n");
+        };
 
+        ws.onmessage = (message) => {
+                console.log(message)
+        };
 
-
-
-
-
+        ws.onerror = (_) => {
+                console.log("error ws")
+        }
+}
 
 export async function fetchingWebSocket():Promise<Map<string,Response>>
 {

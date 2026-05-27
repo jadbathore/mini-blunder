@@ -1,9 +1,17 @@
-import { fetchingWebSocket,response } from "./test.ts";
+import { fetchingWebSocket,response, testExec } from "./test.ts";
 
 (async ()=>{
-        fetchingWebSocket().then((a)=>{console.log(a)}).catch((err)=>{
-                console.log(err)
-        });
+        // fetchingWebSocket().then((a)=>{console.log(a)}).catch((err)=>{
+        //         console.log(err)
+        // });
+
+        testExec(`
+                function add(a,b){
+                        return a + b;
+                }
+                        
+                add(3 + 4);
+        `);
         // cachePutResponse().then(()=>{
         //         console.log("ok")
         // }).catch((err)=>{
